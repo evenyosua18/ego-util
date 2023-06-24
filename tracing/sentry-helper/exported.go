@@ -1,6 +1,7 @@
 package sentry_helper
 
 import (
+	"context"
 	"fmt"
 	"github.com/getsentry/sentry-go"
 	"time"
@@ -44,4 +45,59 @@ func flushSentry(flushTime string) {
 	}
 
 	sentry.Flush(timeout)
+}
+
+func StartParent(ctx interface{}) *sentry.Span {
+	//start transaction
+	sp := sentry.StartTransaction(helper.ctx.GetContextName(ctx))
+
+	//add information
+	sp.Data = map[string]interface{}{}
+
+	information := helper.ctx.GetInfo(ctx)
+
+	for key, value := range information {
+		sp.Data[key] = value
+	}
+
+	return sp
+}
+
+func StartChild(ctx context.Context, request ...any) *sentry.Span {
+	//get caller details
+	caller, function := getCaller(5)
+
+	//sp := span.StartChild(function)
+	sp := sentry.StartSpan(ctx, function)
+	sp.Description = getFunction(function)
+
+	sp.Data = map[string]interface{}{}
+	sp.Data["caller"] = caller
+
+	if len(request) == 1 {
+		sp.Data["request"] = request[0]
+	} else if len(request) > 1 {
+		for idx, req := range request {
+			sp.Data[fmt.Sprintf("%s-%d", "request", idx+1)] = req
+		}
+	}
+
+	return sp
+}
+
+func LogError(sp *sentry.Span, err error, status int) {
+	sp.Status = sentry.SpanStatus(status)
+
+	if err != nil {
+		sp.Data["error"] = err.Error()
+	}
+}
+
+func LogResponse(sp *sentry.Span, response interface{}) {
+	sp.Status = sentry.SpanStatusOK
+	sp.Data["response"] = response
+}
+
+func LogObject(sp *sentry.Span, name string, obj any) {
+	sp.Data[name] = obj
 }
