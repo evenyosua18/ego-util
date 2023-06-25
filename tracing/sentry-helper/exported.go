@@ -101,3 +101,7 @@ func LogResponse(sp *sentry.Span, response interface{}) {
 func LogObject(sp *sentry.Span, name string, obj any) {
 	sp.Data[name] = obj
 }
+
+func SetRouter(routeContext RouteContext) {
+	helper.SetRouter(routeContext)
+}

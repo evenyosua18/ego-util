@@ -9,4 +9,6 @@ func main() {
 		panic(err)
 	}
 	defer flushFunction("2")
+
+	//start parent
 }

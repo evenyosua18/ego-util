@@ -5,8 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type FiberImpl struct {
-}
+type FiberImpl struct{}
 
 func (h *FiberImpl) GetContextName(ctx interface{}) (context.Context, string) {
 	//check nil
