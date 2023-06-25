@@ -1,14 +1,79 @@
 package main
 
-import sentry_helper "github.com/evenyosua18/ego-util/tracing/sentry-helper"
+import (
+	"context"
+	fiber_helper "github.com/evenyosua18/ego-util/routing/fiber-helper"
+	sentry "github.com/evenyosua18/ego-util/tracing/sentry-helper"
+	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
+	"log"
+	"net/http"
+	"os"
+)
 
 func main() {
+	//get env
+	godotenv.Load(".env")
+
 	//initialize sentry
-	flushFunction, err := sentry_helper.InitializeSentry("https://9adf624ee89d40b1b06e7dadeac646ca@o4504592004415488.ingest.sentry.io/4505322347626496", "test")
+	flushFunction, err := sentry.InitializeSentry(os.Getenv("SENTRY_DSN"), os.Getenv("APP_ENV"))
 	if err != nil {
 		panic(err)
 	}
-	defer flushFunction("2")
+	defer flushFunction(os.Getenv("SENTRY_FLUSH_TIME"))
 
-	//start parent
+	//set router
+	sentry.SetRouter(&fiber_helper.FiberImpl{})
+
+	//set fiber
+	api := fiber.New(fiber.Config{BodyLimit: 50 * 1024 * 1024})
+
+	//set test api
+	api.Get("/test", parentFunction).Name("Test")
+
+	//listen route
+	if err := api.Listen(":8080"); err != nil {
+		panic(err)
+	}
+}
+
+func parentFunction(f *fiber.Ctx) error {
+	//start sentry
+	sp := sentry.StartParent(f)
+	defer sp.Finish()
+
+	//call first child
+	firstChildFunction(sp.Context())
+
+	//call second child
+	secondChildFunction(sp.Context())
+
+	return f.Status(http.StatusOK).JSON(fiber.Map{"trace_id": sp.TraceID})
+}
+
+func firstChildFunction(ctx context.Context) {
+	//start sentry
+	sp := sentry.StartChild(ctx)
+	defer sp.Finish()
+
+	log.Println("call first child")
+}
+
+func secondChildFunction(ctx context.Context) {
+	//start sentry
+	sp := sentry.StartChild(ctx)
+	defer sp.Finish()
+
+	//call grand child function
+	grandChildFunction(sp.Context())
+
+	log.Println("call second child")
+}
+
+func grandChildFunction(ctx context.Context) {
+	//start sentry
+	sp := sentry.StartChild(ctx)
+	defer sp.Finish()
+
+	log.Println("call grand child")
 }

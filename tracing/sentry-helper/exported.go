@@ -65,7 +65,7 @@ func StartParent(ctx interface{}) *sentry.Span {
 
 func StartChild(ctx context.Context, request ...any) *sentry.Span {
 	//get caller details
-	caller, function := getCaller(5)
+	caller, function := getCaller(helper.skippedCaller)
 
 	//sp := span.StartChild(function)
 	sp := sentry.StartSpan(ctx, function)
@@ -104,4 +104,8 @@ func LogObject(sp *sentry.Span, name string, obj any) {
 
 func SetRouter(routeContext RouteContext) {
 	helper.SetRouter(routeContext)
+}
+
+func SetSkippedCaller(skipped int) {
+	helper.skippedCaller = skipped
 }
