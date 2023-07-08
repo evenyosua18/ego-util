@@ -51,8 +51,16 @@ func StartParent(ctx interface{}) *sentry.Span {
 	//start transaction
 	sp := sentry.StartTransaction(helper.ctx.GetContextName(ctx))
 
+	//get caller details
+	caller, function := getCaller(helper.skippedCaller)
+
+	//set operation
+	sp.Description = getFunction(function)
+	sp.Op = getFunction(function)
+
 	//add information
 	sp.Data = map[string]interface{}{}
+	sp.Data["caller"] = caller
 
 	information := helper.ctx.GetInfo(ctx)
 
