@@ -2,7 +2,7 @@ module github.com/evenyosua18/ego-util/examples/tracing-sentry
 
 go 1.18
 
-require github.com/evenyosua18/ego-util/tracing/sentry-helper v0.0.0-20230625063202-22003eeea20d
+require github.com/evenyosua18/ego-util/tracing/sentry-helper v0.0.0-20230708072520-27428173131e
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
@@ -23,6 +23,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/sys v0.9.0 // indirect
-	golang.org/x/text v0.10.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 )
