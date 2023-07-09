@@ -1,4 +1,4 @@
-package error
+package errors
 
 import (
 	"gopkg.in/yaml.v3"
@@ -15,7 +15,7 @@ func init() {
 		999: {
 			CustomCode:      999,
 			ResponseMessage: "need to register your custom code",
-			ErrorMessage:    "unknown error code",
+			ErrorMessage:    "unknown errors code",
 			ResponseCode:    500,
 		},
 	}

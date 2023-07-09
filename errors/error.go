@@ -1,4 +1,4 @@
-package error
+package errors
 
 import (
 	"errors"
@@ -10,7 +10,7 @@ import (
 type Error struct {
 	CustomCode      int    `yaml:"code"`
 	ResponseMessage string `yaml:"message"`
-	ErrorMessage    string `yaml:"error"`
+	ErrorMessage    string `yaml:"errors"`
 	ResponseCode    int    `yaml:"response_code"`
 }
 
@@ -31,7 +31,7 @@ func (e Error) CodeResponse() int {
 }
 
 func Extract(e error) (err Error) {
-	//split error message
+	//split errors message
 	if e != nil && e.Error() != "" {
 		msg := e.Error()
 
@@ -41,7 +41,7 @@ func Extract(e error) (err Error) {
 				err.CustomCode = code
 			}
 
-			//set error message
+			//set errors message
 			err.ErrorMessage = msg[strings.Index(msg, ":")+2:]
 		}
 	}
@@ -51,7 +51,7 @@ func Extract(e error) (err Error) {
 		err.CustomCode = 999
 	}
 
-	//if error message is empty, use from custom code
+	//if errors message is empty, use from custom code
 	if err.ErrorMessage == "" {
 		err.ErrorMessage = CustomError[err.CustomCode].ErrorMessage
 	}

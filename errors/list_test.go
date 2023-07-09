@@ -1,13 +1,13 @@
-package error
+package errors
 
 import "testing"
 
 func TestManageListError_Add(t *testing.T) {
 	if len(CustomError) != 1 {
-		t.Errorf("default list custom error should be one")
+		t.Errorf("default list custom errors should be one")
 	}
 
-	//add first error
+	//add first errors
 	Add(Error{
 		CustomCode:      500,
 		ResponseMessage: "TEST",
@@ -17,10 +17,10 @@ func TestManageListError_Add(t *testing.T) {
 
 	//check
 	if len(CustomError) != 2 {
-		t.Errorf("list custom error should be two")
+		t.Errorf("list custom errors should be two")
 	}
 
-	//add second error
+	//add second errors
 	Add(Error{
 		CustomCode:      400,
 		ResponseMessage: "TEST",
@@ -30,7 +30,7 @@ func TestManageListError_Add(t *testing.T) {
 
 	//check
 	if len(CustomError) != 3 {
-		t.Errorf("list custom error should be three, total current error: %d", len(CustomError))
+		t.Errorf("list custom errors should be three, total current errors: %d", len(CustomError))
 	}
 }
 
@@ -44,7 +44,7 @@ func TestManageListError_SetUnknownError(t *testing.T) {
 	})
 
 	if CustomError[999].ErrorMessage != "TEST" {
-		t.Errorf("unknown error message should be 'TEST', current message: %s", CustomError[999].ErrorMessage)
+		t.Errorf("unknown errors message should be 'TEST', current message: %s", CustomError[999].ErrorMessage)
 	}
 
 	if CustomError[999].ResponseMessage != "TEST" {
@@ -60,7 +60,7 @@ func TestManageListError_SetUnknownError(t *testing.T) {
 	})
 
 	if CustomError[999].ErrorMessage != "TEST" {
-		t.Errorf("unknown error message should be 'TEST', current message: %s", CustomError[999].ErrorMessage)
+		t.Errorf("unknown errors message should be 'TEST', current message: %s", CustomError[999].ErrorMessage)
 	}
 
 	if CustomError[999].ResponseMessage != "TEST" {
@@ -69,11 +69,11 @@ func TestManageListError_SetUnknownError(t *testing.T) {
 }
 
 func TestManageListError_RegisterError(t *testing.T) {
-	//register error from yaml file, add one error
+	//register errors from yaml file, add one errors
 	RegisterError("./test.yaml")
 
 	if len(CustomError) != 4 {
-		t.Errorf("list custom error should be four, total current error: %d", len(CustomError))
+		t.Errorf("list custom errors should be four, total current errors: %d", len(CustomError))
 	}
 }
 
@@ -82,6 +82,6 @@ func TestManageListError_Remove(t *testing.T) {
 	Remove(300)
 
 	if len(CustomError) != 3 {
-		t.Errorf("list custom error should be three, total current error: %d", len(CustomError))
+		t.Errorf("list custom errors should be three, total current errors: %d", len(CustomError))
 	}
 }
