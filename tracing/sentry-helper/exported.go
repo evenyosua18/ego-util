@@ -71,7 +71,7 @@ func StartParent(ctx interface{}) *sentry.Span {
 	return sp
 }
 
-func StartChild(ctx context.Context, request ...any) *sentry.Span {
+func StartChild(ctx context.Context, request ...interface{}) *sentry.Span {
 	//get caller details
 	caller, function := getCaller(helper.skippedCaller)
 
@@ -106,7 +106,7 @@ func LogResponse(sp *sentry.Span, response interface{}) {
 	sp.Data["response"] = response
 }
 
-func LogObject(sp *sentry.Span, name string, obj any) {
+func LogObject(sp *sentry.Span, name string, obj interface{}) {
 	sp.Data[name] = obj
 }
 

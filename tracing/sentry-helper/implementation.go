@@ -5,12 +5,19 @@ import (
 	"github.com/getsentry/sentry-go"
 )
 
-func (h *Helper) LogError(span any, err error, status int) {
+func (h *Helper) LogError(span interface{}, err error, status ...int) {
 	sp := span.(*sentry.Span)
-	LogError(sp, err, status)
+
+	stat := 0
+
+	if len(status) != 0 {
+		stat = status[0]
+	}
+
+	LogError(sp, err, stat)
 }
 
-func (h *Helper) LogObject(span any, name string, obj any) {
+func (h *Helper) LogObject(span interface{}, name string, obj interface{}) {
 	sp := span.(*sentry.Span)
 	LogObject(sp, name, obj)
 }

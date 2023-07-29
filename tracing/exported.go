@@ -39,6 +39,14 @@ func Close(span interface{}) {
 	}
 }
 
+func Context(span interface{}) context.Context {
+	if tracing.tracer != nil {
+		return tracing.Context(span)
+	}
+
+	return nil
+}
+
 func LogObject(span interface{}, name string, obj interface{}) {
 	if tracing.tracer != nil {
 		tracing.LogObject(span, name, obj)
@@ -84,7 +92,7 @@ func LogRequest(span, request interface{}) {
 	}
 }
 
-func ResponseError(span any, ctx any, err error) error {
+func ResponseError(span, ctx interface{}, err error) error {
 	//tracing & logging
 	LogError(span, err)
 
@@ -96,7 +104,7 @@ func ResponseError(span any, ctx any, err error) error {
 	return tracing.res.ResponseFailed(ctx, err)
 }
 
-func ResponseSuccess(span, ctx, response any, codes ...int) error {
+func ResponseSuccess(span, ctx, response interface{}, codes ...int) error {
 	//tracing & logging
 	LogResponse(span, response)
 
