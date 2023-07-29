@@ -72,3 +72,13 @@ func Wrap(err error, code ...int) error {
 		return err
 	}
 }
+
+func Get(code int) (err Error) {
+	err = CustomError[code]
+
+	if err.CustomCode == 0 {
+		err = CustomError[999]
+	}
+
+	return
+}

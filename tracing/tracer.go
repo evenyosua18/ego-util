@@ -17,7 +17,7 @@ type tracer interface {
 
 type response interface {
 	ResponseFailed(ctx interface{}, err error) error
-	ResponseSuccess(ctx, response interface{}, code int) error
+	ResponseSuccess(ctx, response, message interface{}) error
 }
 
 type Trace struct {

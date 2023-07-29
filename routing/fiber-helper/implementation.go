@@ -3,6 +3,7 @@ package fiber_helper
 import (
 	"context"
 	"github.com/gofiber/fiber/v2"
+	"github.com/mitchellh/mapstructure"
 )
 
 type FiberImpl struct{}
@@ -50,4 +51,26 @@ func (h *FiberImpl) GetInfo(ctx interface{}) (info map[string]interface{}) {
 	info["context"] = f.Context().String()
 
 	return
+}
+
+type FiberResponseImpl struct{}
+
+func (h *FiberImpl) ResponseSuccess(ctx, response interface{}, statusCode int) error {
+	f := ctx.(*fiber.Ctx)
+
+	//set http status code
+	msg := Response{}
+	if err := mapstructure.Decode(response, &msg); err != nil {
+		return err
+	}
+
+	f.Status(msg.CustomCode)
+
+	//set response
+	return f.JSON(HttpResponse{
+		Code:         msg.CustomCode,
+		Message:      msg.ResponseMessage,
+		ErrorMessage: "",
+		Data:         response,
+	})
 }

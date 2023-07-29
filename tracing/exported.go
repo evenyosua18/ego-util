@@ -2,6 +2,7 @@ package tracing
 
 import (
 	"context"
+	"fmt"
 )
 
 var (
@@ -87,6 +88,10 @@ func ResponseError(span any, ctx any, err error) error {
 	//tracing & logging
 	LogError(span, err)
 
+	if tracing.res == nil {
+		return fmt.Errorf("response model is empty")
+	}
+
 	//return tracing..ResponseFailedHTTP(ctx, err)
 	return tracing.res.ResponseFailed(ctx, err)
 }
@@ -94,6 +99,10 @@ func ResponseError(span any, ctx any, err error) error {
 func ResponseSuccess(span, ctx, response any, codes ...int) error {
 	//tracing & logging
 	LogResponse(span, response)
+
+	if tracing.res == nil {
+		return fmt.Errorf("response model is empty")
+	}
 
 	//set default success code
 	defaultCode := 200
