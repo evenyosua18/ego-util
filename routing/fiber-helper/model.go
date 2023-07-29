@@ -11,7 +11,7 @@ type HttpResponse struct {
 	Data interface{} `json:"data" swaggertype:"string" example:"object result data | will be nil if error"`
 }
 
-type Response struct {
+type ErrorResponse struct {
 	CustomCode      int    `yaml:"code"`
 	ResponseMessage string `yaml:"message"`
 	ErrorMessage    string `yaml:"errors"`

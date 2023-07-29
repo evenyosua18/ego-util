@@ -17,6 +17,10 @@ func SetTracer(tracerInterface tracer) {
 	tracing.SetTracer(tracerInterface)
 }
 
+func SetResponse(responseInterface response) {
+	tracing.SetResponse(responseInterface)
+}
+
 func StartParent(ctx interface{}) interface{} {
 	if tracing.tracer != nil {
 		return tracing.StartParent(ctx)
@@ -92,7 +96,7 @@ func LogRequest(span, request interface{}) {
 	}
 }
 
-func ResponseError(span, ctx interface{}, err error) error {
+func ResponseError(span, ctx, code interface{}, err error) error {
 	//tracing & logging
 	LogError(span, err)
 
@@ -101,10 +105,10 @@ func ResponseError(span, ctx interface{}, err error) error {
 	}
 
 	//return tracing..ResponseFailedHTTP(ctx, err)
-	return tracing.res.ResponseFailed(ctx, err)
+	return tracing.res.ResponseFailed(ctx, code)
 }
 
-func ResponseSuccess(span, ctx, response interface{}, codes ...int) error {
+func ResponseSuccess(span, ctx, response interface{}, code ...interface{}) error {
 	//tracing & logging
 	LogResponse(span, response)
 
@@ -112,11 +116,5 @@ func ResponseSuccess(span, ctx, response interface{}, codes ...int) error {
 		return fmt.Errorf("response model is empty")
 	}
 
-	//set default success code
-	defaultCode := 200
-	if len(codes) == 1 {
-		defaultCode = codes[0]
-	}
-
-	return tracing.res.ResponseSuccess(ctx, response, defaultCode)
+	return tracing.res.ResponseSuccess(ctx, response, code...)
 }

@@ -55,16 +55,22 @@ func (h *FiberImpl) GetInfo(ctx interface{}) (info map[string]interface{}) {
 
 type FiberResponseImpl struct{}
 
-func (h *FiberImpl) ResponseSuccess(ctx, response interface{}, statusCode int) error {
+func (h *FiberResponseImpl) ResponseSuccess(ctx, response interface{}, code ...interface{}) error {
 	f := ctx.(*fiber.Ctx)
 
 	//set http status code
-	msg := Response{}
-	if err := mapstructure.Decode(response, &msg); err != nil {
-		return err
+	msg := ErrorResponse{
+		ResponseCode: 200,
+		CustomCode:   200,
 	}
 
-	f.Status(msg.CustomCode)
+	if len(code) == 1 {
+		if err := mapstructure.Decode(code[0], &msg); err != nil {
+			return err
+		}
+	}
+
+	f.Status(msg.ResponseCode)
 
 	//set response
 	return f.JSON(HttpResponse{
@@ -72,5 +78,26 @@ func (h *FiberImpl) ResponseSuccess(ctx, response interface{}, statusCode int) e
 		Message:      msg.ResponseMessage,
 		ErrorMessage: "",
 		Data:         response,
+	})
+}
+
+func (h *FiberResponseImpl) ResponseFailed(ctx, code interface{}) error {
+	f := ctx.(*fiber.Ctx)
+
+	//set code response
+	msg := ErrorResponse{}
+
+	if err := mapstructure.Decode(code, &msg); err != nil {
+		return err
+	}
+
+	//set http code
+	f.Status(msg.ResponseCode)
+
+	//set response
+	return f.JSON(HttpResponse{
+		Code:         msg.CustomCode,
+		Message:      msg.ResponseMessage,
+		ErrorMessage: msg.ErrorMessage,
 	})
 }
