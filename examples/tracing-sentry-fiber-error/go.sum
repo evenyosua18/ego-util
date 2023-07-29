@@ -3,8 +3,13 @@ github.com/andybalholm/brotli v1.0.5/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHG
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/evenyosua18/ego-util v0.0.5 h1:dlU3ygUWlB7waxHO3pVo3qTsZjNc7QdczT1uf/cbo3M=
 github.com/evenyosua18/ego-util v0.0.5/go.mod h1:cM75HZMiS7fUx+0fJx50Aui5lZQ41c/oTueRJ/jdw10=
+github.com/evenyosua18/ego-util v0.0.6-rev1 h1:7UyfemhT8C3i7LUPPyZhcqYJfKmB7hiinQBCYLqY3rU=
+github.com/evenyosua18/ego-util v0.0.6-rev1/go.mod h1:3QLEaaMxQa7bETTCYbZofLG4Gj8691LcoMz5g/oBd5Y=
+github.com/evenyosua18/ego-util v0.0.6/go.mod h1:cM75HZMiS7fUx+0fJx50Aui5lZQ41c/oTueRJ/jdw10=
 github.com/evenyosua18/ego-util/routing/fiber-helper v0.0.0-20230729091007-3809d0973917 h1:gE2ttqK3YefGb+SSohiXrkcG1ic2vsexYIBA98MIY7k=
 github.com/evenyosua18/ego-util/routing/fiber-helper v0.0.0-20230729091007-3809d0973917/go.mod h1:jMIEAjk8ApEhcL/nsvSr6FZidE6BA/kEpjsI2/Yu5Rg=
+github.com/evenyosua18/ego-util/tracing v0.0.0-20230729100654-347099d321ce h1:fCpWJehHqi9nMWl40pw3j2eFlJLB9iXyyNMx1EqX/rY=
+github.com/evenyosua18/ego-util/tracing v0.0.0-20230729100654-347099d321ce/go.mod h1:D8KB8N2ppFWIwAsozE3IiDbvUPObg1MCe/k4K4igF+w=
 github.com/evenyosua18/ego-util/tracing/sentry-helper v0.0.0-20230729091007-3809d0973917 h1:A2FZyvXoIPvA8nvN/fzV633nEVtRl1ugXwnSOK78mno=
 github.com/evenyosua18/ego-util/tracing/sentry-helper v0.0.0-20230729091007-3809d0973917/go.mod h1:MsILgKOnw8Gm16Mi/kaCg1v1PZciWS8EnNPl1CC8k/Y=
 github.com/getsentry/sentry-go v0.22.0 h1:XNX9zKbv7baSEI65l+H1GEJgSeIC1c7EN5kluWaP6dM=

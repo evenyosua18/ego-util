@@ -11,7 +11,8 @@ require (
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
-	github.com/evenyosua18/ego-util v0.0.5 // indirect
+	github.com/evenyosua18/ego-util v0.0.6-rev1 // indirect
+	github.com/evenyosua18/ego-util/tracing v0.0.0-20230729100654-347099d321ce // indirect
 	github.com/getsentry/sentry-go v0.22.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/klauspost/compress v1.16.6 // indirect

@@ -114,6 +114,10 @@ func SetRouter(routeContext RouteContext) {
 	helper.SetRouter(routeContext)
 }
 
+func Get() *Helper {
+	return helper
+}
+
 func SetSkippedCaller(skipped int) {
 	helper.skippedCaller = skipped
 }

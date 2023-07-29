@@ -11,7 +11,8 @@ type tracer interface {
 	StartParent(ctx interface{}) interface{}
 	StartChild(ctx context.Context, request ...interface{}) interface{}
 	Close(span interface{})
-	LogError(span interface{}, err error)
+	Context(span interface{}) context.Context
+	LogError(span interface{}, err error, status ...int)
 	LogObject(span interface{}, name string, obj interface{})
 }
 
