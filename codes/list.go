@@ -7,13 +7,14 @@ import (
 )
 
 var (
-	CustomError map[int]Code
+	customCodes        map[int]Code
+	defaultUnknownCode = 999
 )
 
 func init() {
-	CustomError = map[int]Code{
-		999: {
-			CustomCode:      999,
+	customCodes = map[int]Code{
+		defaultUnknownCode: {
+			CustomCode:      defaultUnknownCode,
 			ResponseMessage: "need to register your custom code",
 			ErrorMessage:    "unknown codes code",
 			ResponseCode:    500,
@@ -21,7 +22,7 @@ func init() {
 	}
 }
 
-func RegisterError(path string) {
+func RegisterCode(path string) {
 	//read file
 	f, err := os.ReadFile(path)
 
@@ -30,7 +31,7 @@ func RegisterError(path string) {
 	}
 
 	e := struct {
-		Errors []Code `yaml:"codes"`
+		Codes []Code `yaml:"codes"`
 	}{}
 
 	//unmarshal yaml file
@@ -39,27 +40,31 @@ func RegisterError(path string) {
 	}
 
 	//save to map
-	for _, errorCode := range e.Errors {
-		Add(errorCode)
+	for _, code := range e.Codes {
+		Add(code)
 	}
 
-	log.Printf("success register %d codes", len(e.Errors))
+	log.Printf("success register %d codes", len(e.Codes))
 }
 
 func Add(e Code) {
-	if e.CustomCode != 999 {
-		CustomError[e.CustomCode] = e
+	if e.CustomCode != defaultUnknownCode {
+		customCodes[e.CustomCode] = e
 	}
 }
 
 func Remove(code int) {
-	if code != 999 {
-		delete(CustomError, code)
+	if code != defaultUnknownCode {
+		delete(customCodes, code)
 	}
 }
 
-func SetUnknownError(e Code) {
-	if e.CustomCode == 999 {
-		CustomError[e.CustomCode] = e
+func SetUnknownCode(e Code) {
+	if e.CustomCode == defaultUnknownCode {
+		customCodes[e.CustomCode] = e
 	}
+}
+
+func List() map[int]Code {
+	return customCodes
 }

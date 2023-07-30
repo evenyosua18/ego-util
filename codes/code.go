@@ -47,20 +47,20 @@ func Extract(e error) (code Code) {
 	}
 
 	//check from map
-	if CustomError[code.CustomCode].CustomCode == 0 {
-		code.CustomCode = 999
+	if customCodes[code.CustomCode].CustomCode == 0 {
+		code.CustomCode = defaultUnknownCode
 	}
 
 	//if codes message is empty, use from custom code
 	if code.ErrorMessage == "" {
-		code.ErrorMessage = CustomError[code.CustomCode].ErrorMessage
+		code.ErrorMessage = customCodes[code.CustomCode].ErrorMessage
 	}
 
 	//set response message
-	code.ResponseMessage = CustomError[code.CustomCode].ResponseMessage
+	code.ResponseMessage = customCodes[code.CustomCode].ResponseMessage
 
 	//set response code
-	code.ResponseCode = CustomError[code.CustomCode].ResponseCode
+	code.ResponseCode = customCodes[code.CustomCode].ResponseCode
 
 	return
 }
@@ -75,25 +75,25 @@ func Wrap(err error, code ...int) error {
 
 func Create(code int) (err Code) {
 	//check from map
-	if CustomError[code].CustomCode == 0 {
-		return CustomError[code]
+	if customCodes[code].CustomCode == 0 {
+		return customCodes[code]
 	} else {
-		return CustomError[999]
+		return customCodes[defaultUnknownCode]
 	}
 }
 
 func FromError(err error, codes ...int) (code Code) {
 	//check err should be not empty
 	if err == nil {
-		return CustomError[999]
+		return customCodes[defaultUnknownCode]
 	}
 
 	//set up error message
 	code.ErrorMessage = err.Error()
 
-	if len(codes) == 1 && CustomError[codes[0]].CustomCode != 0 {
-		code.ResponseCode = CustomError[codes[0]].ResponseCode
-		code.ResponseMessage = CustomError[codes[0]].ResponseMessage
+	if len(codes) == 1 && customCodes[codes[0]].CustomCode != 0 {
+		code.ResponseCode = customCodes[codes[0]].ResponseCode
+		code.ResponseMessage = customCodes[codes[0]].ResponseMessage
 		code.CustomCode = codes[0]
 	}
 
@@ -101,10 +101,10 @@ func FromError(err error, codes ...int) (code Code) {
 }
 
 func Get(code int) (err Code) {
-	err = CustomError[code]
+	err = customCodes[code]
 
 	if err.CustomCode == 0 {
-		err = CustomError[999]
+		err = customCodes[defaultUnknownCode]
 	}
 
 	return
