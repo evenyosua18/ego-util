@@ -15,7 +15,7 @@ func TestError_Wrap(t *testing.T) {
 
 func TestError_Extract(t *testing.T) {
 	//add sample errors
-	Add(Error{
+	Add(Code{
 		CustomCode:      105,
 		ResponseMessage: "TEST",
 		ErrorMessage:    "TEST",

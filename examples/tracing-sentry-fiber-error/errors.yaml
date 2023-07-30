@@ -1,0 +1,14 @@
+errors:
+  - code: 500
+    error: internal server error
+    message: there is an issue, we will fix it as soon as possible
+    response_code: 500
+  - code: 401
+    error: empty value
+    message: there is an value, please give the valid value
+    response_code: 400
+
+  - code: 200
+    error: success
+    message: api called successfully
+    response_code: 200

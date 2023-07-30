@@ -7,11 +7,11 @@ import (
 )
 
 var (
-	CustomError map[int]Error
+	CustomError map[int]Code
 )
 
 func init() {
-	CustomError = map[int]Error{
+	CustomError = map[int]Code{
 		999: {
 			CustomCode:      999,
 			ResponseMessage: "need to register your custom code",
@@ -30,7 +30,7 @@ func RegisterError(path string) {
 	}
 
 	e := struct {
-		Errors []Error `yaml:"errors"`
+		Errors []Code `yaml:"errors"`
 	}{}
 
 	//unmarshal yaml file
@@ -46,7 +46,7 @@ func RegisterError(path string) {
 	log.Printf("success register %d errors", len(e.Errors))
 }
 
-func Add(e Error) {
+func Add(e Code) {
 	if e.CustomCode != 999 {
 		CustomError[e.CustomCode] = e
 	}
@@ -58,7 +58,7 @@ func Remove(code int) {
 	}
 }
 
-func SetUnknownError(e Error) {
+func SetUnknownError(e Code) {
 	if e.CustomCode == 999 {
 		CustomError[e.CustomCode] = e
 	}

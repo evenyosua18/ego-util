@@ -8,7 +8,7 @@ func TestManageListError_Add(t *testing.T) {
 	}
 
 	//add first errors
-	Add(Error{
+	Add(Code{
 		CustomCode:      500,
 		ResponseMessage: "TEST",
 		ErrorMessage:    "TEST",
@@ -21,7 +21,7 @@ func TestManageListError_Add(t *testing.T) {
 	}
 
 	//add second errors
-	Add(Error{
+	Add(Code{
 		CustomCode:      400,
 		ResponseMessage: "TEST",
 		ErrorMessage:    "TEST",
@@ -36,7 +36,7 @@ func TestManageListError_Add(t *testing.T) {
 
 func TestManageListError_SetUnknownError(t *testing.T) {
 	//call function SetUnknownError, custom code not 999
-	SetUnknownError(Error{
+	SetUnknownError(Code{
 		CustomCode:      999,
 		ResponseMessage: "TEST",
 		ErrorMessage:    "TEST",
@@ -52,7 +52,7 @@ func TestManageListError_SetUnknownError(t *testing.T) {
 	}
 
 	//call function SetUnknownError, but custom code not 999
-	SetUnknownError(Error{
+	SetUnknownError(Code{
 		CustomCode:      500,
 		ResponseMessage: "TEST INVALID",
 		ErrorMessage:    "TEST INVALID",
