@@ -1,9 +1,9 @@
 package fiber_helper
 
 type HttpResponse struct {
-	// Code will store custom code that define in errors.yml
+	// Code will store custom code that define in codes.yml
 	Code int `json:"code"`
-	// Message will store message from custom code that define in errors.yml
+	// Message will store message from custom code that define in codes.yml
 	Message string `json:"message" example:"message from custom code"`
 	// ErrorMessage will store error message from system
 	ErrorMessage string `json:"error_message" example:"error message from system"`
@@ -14,6 +14,6 @@ type HttpResponse struct {
 type ErrorResponse struct {
 	CustomCode      int    `yaml:"code"`
 	ResponseMessage string `yaml:"message"`
-	ErrorMessage    string `yaml:"errors"`
+	ErrorMessage    string `yaml:"error"`
 	ResponseCode    int    `yaml:"response_code"`
 }

@@ -1,6 +1,10 @@
-errors:
+codes:
   - code: 500
     error: internal server error
+    message: there is an issue, we will fix it as soon as possible
+    response_code: 500
+  - code: 501
+    error: database error
     message: there is an issue, we will fix it as soon as possible
     response_code: 500
   - code: 401

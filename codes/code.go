@@ -10,7 +10,7 @@ import (
 type Code struct {
 	CustomCode      int    `yaml:"code"`
 	ResponseMessage string `yaml:"message"`
-	ErrorMessage    string `yaml:"codes"`
+	ErrorMessage    string `yaml:"error"`
 	ResponseCode    int    `yaml:"response_code"`
 }
 
