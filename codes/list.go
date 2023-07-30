@@ -1,4 +1,4 @@
-package errors
+package codes
 
 import (
 	"gopkg.in/yaml.v3"
@@ -15,7 +15,7 @@ func init() {
 		999: {
 			CustomCode:      999,
 			ResponseMessage: "need to register your custom code",
-			ErrorMessage:    "unknown errors code",
+			ErrorMessage:    "unknown codes code",
 			ResponseCode:    500,
 		},
 	}
@@ -30,7 +30,7 @@ func RegisterError(path string) {
 	}
 
 	e := struct {
-		Errors []Code `yaml:"errors"`
+		Errors []Code `yaml:"codes"`
 	}{}
 
 	//unmarshal yaml file
@@ -43,7 +43,7 @@ func RegisterError(path string) {
 		Add(errorCode)
 	}
 
-	log.Printf("success register %d errors", len(e.Errors))
+	log.Printf("success register %d codes", len(e.Errors))
 }
 
 func Add(e Code) {
