@@ -11,6 +11,14 @@ func Validate(v interface{}) (map[string]ErrorArray, error) {
 	return defaultValidator.Validate(v)
 }
 
+func GetFirstError(msg map[string]ErrorArray) error {
+	for _, value := range msg {
+		return errors.New(value[0])
+	}
+
+	return nil
+}
+
 func (mv *Validator) Validate(v interface{}) (map[string]ErrorArray, error) {
 	sv := reflect.ValueOf(v)
 	st := reflect.TypeOf(v)
