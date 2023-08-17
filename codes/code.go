@@ -66,8 +66,10 @@ func Extract(e error) (code Code) {
 }
 
 func Wrap(err error, code ...int) error {
-	if len(code) == 1 {
+	if err != nil && len(code) == 1 {
 		return fmt.Errorf("%d: %w", code[0], err)
+	} else if err == nil && len(code) == 1 {
+		return fmt.Errorf("%d: ", code[0])
 	} else {
 		return err
 	}
@@ -75,7 +77,7 @@ func Wrap(err error, code ...int) error {
 
 func Create(code int) (err Code) {
 	//check from map
-	if customCodes[code].CustomCode == 0 {
+	if customCodes[code].CustomCode != 0 {
 		return customCodes[code]
 	} else {
 		return customCodes[defaultUnknownCode]
