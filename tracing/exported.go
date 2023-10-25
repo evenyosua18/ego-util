@@ -21,6 +21,10 @@ func SetResponse(responseInterface response) {
 	tracing.SetResponse(responseInterface)
 }
 
+func ShowLog() {
+	tracing.ShowLog(true)
+}
+
 func StartParent(ctx interface{}) interface{} {
 	if tracing.tracer != nil {
 		return tracing.StartParent(ctx)
