@@ -46,3 +46,7 @@ func (t *Trace) SetTracer(traceInterface tracer) {
 func (t *Trace) SetResponse(responseInterface response) {
 	t.res = responseInterface
 }
+
+func (t *Trace) ShowLog(isShow bool) {
+	t.showLog = isShow
+}
