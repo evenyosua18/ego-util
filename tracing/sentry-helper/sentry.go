@@ -23,6 +23,13 @@ type RouteContext interface {
 	GetInfo(interface{}) map[string]interface{}
 }
 
+type NamingRules interface {
+	ManageChildName(string) string
+	ManageChildOperation(string) string
+	ManageParentName(string) string
+	ManageParentOperation(string) string
+}
+
 type Helper struct {
 	dsn                 string
 	env                 string
@@ -31,7 +38,8 @@ type Helper struct {
 	skippedCaller       int
 	parentSkippedCaller int
 
-	ctx RouteContext
+	ctx    RouteContext
+	naming NamingRules
 }
 
 func (h *Helper) SetDSN(dsn string) *Helper {
@@ -41,6 +49,10 @@ func (h *Helper) SetDSN(dsn string) *Helper {
 
 func (h *Helper) SetRouter(routeContext RouteContext) {
 	h.ctx = routeContext
+}
+
+func (h *Helper) SetNamingRules(namingRules NamingRules) {
+	h.naming = namingRules
 }
 
 func getCaller(skip ...int) (description, function string) {
@@ -59,7 +71,7 @@ func getCaller(skip ...int) (description, function string) {
 	frame, _ := frames.Next()
 
 	description = fmt.Sprintf("%s - %s#%d", frame.Function, frame.File, frame.Line)
-	function = getFunction(frame.Function)
+	function = frame.Function
 
 	return
 }

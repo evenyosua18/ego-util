@@ -53,10 +53,14 @@ func StartParent(ctx interface{}) *sentry.Span {
 
 	//get caller details
 	caller, function := getCaller(helper.skippedCaller)
-
 	//set operation
-	sp.Description = getFunction(function)
-	sp.Op = getFunction(function)
+	if helper.naming != nil {
+		sp.Description = helper.naming.ManageParentName(function)
+		sp.Op = helper.naming.ManageParentOperation(function)
+	} else {
+		sp.Description = getFunction(function)
+		sp.Op = getFunction(function)
+	}
 
 	//add information
 	sp.Data = map[string]interface{}{}
@@ -76,8 +80,15 @@ func StartChild(ctx context.Context, request ...interface{}) *sentry.Span {
 	caller, function := getCaller(helper.skippedCaller)
 
 	//sp := span.StartChild(function)
-	sp := sentry.StartSpan(ctx, function)
-	sp.Description = getFunction(function)
+	op, desc := getFunction(function), getFunction(function)
+
+	if helper.naming != nil {
+		op = helper.naming.ManageChildOperation(function)
+		desc = helper.naming.ManageChildName(function)
+	}
+
+	sp := sentry.StartSpan(ctx, op)
+	sp.Description = desc
 
 	sp.Data = map[string]interface{}{}
 	sp.Data["caller"] = caller
@@ -112,6 +123,10 @@ func LogObject(sp *sentry.Span, name string, obj interface{}) {
 
 func SetRouter(routeContext RouteContext) {
 	helper.SetRouter(routeContext)
+}
+
+func SetNamingRules(namingRules NamingRules) {
+	helper.SetNamingRules(namingRules)
 }
 
 func Get() *Helper {
