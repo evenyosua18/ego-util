@@ -118,8 +118,9 @@ func Get() *Helper {
 	return helper
 }
 
-func SetSkippedCaller(skipped int) {
-	helper.skippedCaller = skipped
+func SetSkippedCaller(childSkipped, parentSkipped int) {
+	helper.skippedCaller = childSkipped
+	helper.parentSkippedCaller = parentSkipped
 }
 
 func AlertError(err error, modules map[string]string) {

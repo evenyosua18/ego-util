@@ -13,7 +13,8 @@ var (
 
 func New() *Helper {
 	return &Helper{
-		skippedCaller: 3,
+		skippedCaller:       3,
+		parentSkippedCaller: 3,
 	}
 }
 
@@ -23,11 +24,12 @@ type RouteContext interface {
 }
 
 type Helper struct {
-	dsn           string
-	env           string
-	name          string // app name
-	flushTime     string
-	skippedCaller int
+	dsn                 string
+	env                 string
+	name                string // app name
+	flushTime           string
+	skippedCaller       int
+	parentSkippedCaller int
 
 	ctx RouteContext
 }
