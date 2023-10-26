@@ -121,3 +121,23 @@ func Get() *Helper {
 func SetSkippedCaller(skipped int) {
 	helper.skippedCaller = skipped
 }
+
+func AlertError(err error, modules map[string]string) {
+	sentry.CaptureEvent(&sentry.Event{
+		Environment: helper.env,
+		Level:       sentry.LevelError,
+		Message:     err.Error(),
+		ServerName:  helper.name,
+		Modules:     modules,
+	})
+}
+
+func AlertPanic(err error, modules map[string]string) {
+	sentry.CaptureEvent(&sentry.Event{
+		Environment: helper.env,
+		Level:       sentry.LevelFatal,
+		Message:     err.Error(),
+		ServerName:  helper.name,
+		Modules:     modules,
+	})
+}

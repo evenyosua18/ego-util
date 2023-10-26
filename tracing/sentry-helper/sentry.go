@@ -25,6 +25,7 @@ type RouteContext interface {
 type Helper struct {
 	dsn           string
 	env           string
+	name          string // app name
 	flushTime     string
 	skippedCaller int
 
