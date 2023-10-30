@@ -130,3 +130,11 @@ func GetTraceID(span interface{}) string {
 
 	return ""
 }
+
+func AddContextValue(span interface{}, key string, value interface{}) context.Context {
+	if tracing.tracer != nil {
+		return context.WithValue(tracing.Context(span), key, value)
+	}
+
+	return nil
+}
