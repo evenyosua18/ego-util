@@ -122,3 +122,11 @@ func ResponseSuccess(span, ctx, response interface{}, code ...interface{}) error
 
 	return tracing.res.ResponseSuccess(ctx, response, code...)
 }
+
+func GetTraceID(span interface{}) string {
+	if tracing.tracer != nil {
+		return tracing.GetTraceID(span)
+	}
+
+	return ""
+}

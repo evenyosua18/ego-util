@@ -14,6 +14,7 @@ type tracer interface {
 	Context(span interface{}) context.Context
 	LogError(span interface{}, err error, status ...int)
 	LogObject(span interface{}, name string, obj interface{})
+	GetTraceID(span interface{}) string
 }
 
 type response interface {

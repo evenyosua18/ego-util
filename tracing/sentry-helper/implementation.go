@@ -40,5 +40,10 @@ func (h *Helper) Context(span interface{}) context.Context {
 	return sp.Context()
 }
 
+func (h *Helper) GetTraceID(span interface{}) string {
+	sp := span.(*sentry.Span)
+	return sp.TraceID.String()
+}
+
 //	Close(span interface{})
 //	Context() context.Context
