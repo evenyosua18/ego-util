@@ -24,7 +24,7 @@ func main() {
 
 	//setup tracer
 	sentry.SetRouter(&fiber_helper.FiberImpl{})
-	sentry.SetSkippedCaller(5)
+	sentry.SetSkippedCaller(5, 5)
 	tracing.SetResponse(&fiber_helper.FiberResponseImpl{})
 	tracing.SetTracer(sentry.Get())
 
@@ -38,7 +38,7 @@ func main() {
 	api.Get("/test/:id", controller.TestController).Name("Test Controller")
 
 	//listen route
-	if err := api.Listen(":8080"); err != nil {
+	if err := api.Listen(":8000"); err != nil {
 		panic(err)
 	}
 }

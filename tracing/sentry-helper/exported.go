@@ -48,13 +48,21 @@ func flushSentry(flushTime string) {
 }
 
 func StartParent(ctx interface{}) *sentry.Span {
+	helper.PrintLog("start StartParent function")
+
 	//start transaction
 	sp := sentry.StartTransaction(helper.ctx.GetContextName(ctx))
 
 	//get caller details
 	caller, function := getCaller(helper.skippedCaller)
+
+	helper.PrintLog("caller %s", caller)
+	helper.PrintLog("function %s", function)
+
 	//set operation
 	if helper.naming != nil {
+		helper.PrintLog("using naming helper")
+
 		sp.Description = helper.naming.ManageParentName(function)
 		sp.Op = helper.naming.ManageParentOperation(function)
 	} else {
@@ -76,8 +84,13 @@ func StartParent(ctx interface{}) *sentry.Span {
 }
 
 func StartChild(ctx context.Context, request ...interface{}) *sentry.Span {
+	helper.PrintLog("start StartChild function")
+
 	//get caller details
 	caller, function := getCaller(helper.skippedCaller)
+
+	helper.PrintLog("caller %s", caller)
+	helper.PrintLog("function %s", function)
 
 	//sp := span.StartChild(function)
 	op, desc := getFunction(function), getFunction(function)
@@ -136,6 +149,10 @@ func Get() *Helper {
 func SetSkippedCaller(childSkipped, parentSkipped int) {
 	helper.skippedCaller = childSkipped
 	helper.parentSkippedCaller = parentSkipped
+}
+
+func ShowSentryLog() {
+	helper.SetShowSentryLog(true)
 }
 
 func AlertError(err error, modules map[string]string) {

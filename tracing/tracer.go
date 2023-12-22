@@ -24,15 +24,17 @@ type response interface {
 
 type Trace struct {
 	tracer
-	log     logger
-	res     response
-	showLog bool
+	log          logger
+	res          response
+	showLog      bool
+	showTraceLog bool
 }
 
 func New() *Trace {
 	return &Trace{
-		log:     &DefaultLogger{},
-		showLog: false,
+		log:          &DefaultLogger{},
+		showLog:      false,
+		showTraceLog: false,
 	}
 }
 
@@ -50,4 +52,14 @@ func (t *Trace) SetResponse(responseInterface response) {
 
 func (t *Trace) ShowLog(isShow bool) {
 	t.showLog = isShow
+}
+
+func (t *Trace) ShowTraceLog(isShow bool) {
+	t.showTraceLog = isShow
+}
+
+func (t *Trace) PrintLog(msg string) {
+	if t.showLog && t.showTraceLog && t.log != nil {
+		t.log.Println(msg)
+	}
 }

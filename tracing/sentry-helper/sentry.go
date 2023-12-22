@@ -38,6 +38,8 @@ type Helper struct {
 	skippedCaller       int
 	parentSkippedCaller int
 
+	showSentryLog bool
+
 	ctx    RouteContext
 	naming NamingRules
 }
@@ -53,6 +55,20 @@ func (h *Helper) SetRouter(routeContext RouteContext) {
 
 func (h *Helper) SetNamingRules(namingRules NamingRules) {
 	h.naming = namingRules
+}
+
+func (h *Helper) SetShowSentryLog(isShow bool) {
+	h.showSentryLog = isShow
+}
+
+func (h *Helper) PrintLog(msg string, values ...any) {
+	if h.showSentryLog {
+		if len(values) == 0 {
+			fmt.Println(msg)
+		} else {
+			fmt.Printf(msg+"\n", values...)
+		}
+	}
 }
 
 func getCaller(skip ...int) (description, function string) {
